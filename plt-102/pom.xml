@@ -15,4 +15,13 @@
         <module>zj102</module>
         <module>xb102</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.bobandata.iot</groupId>
+            <artifactId>entity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

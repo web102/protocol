@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
  * @Date: Created in 18:40 2019/1/15.
  */
 @MappedSuperclass
-public class IData {
+public class IData implements Serializable {
     @JsonSerialize(using = TimestampSerializer.class)
     @JsonDeserialize(using = TimestampDeserializer.class)
     private Timestamp occurTime;
