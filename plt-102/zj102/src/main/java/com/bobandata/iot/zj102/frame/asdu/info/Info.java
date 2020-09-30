@@ -4,8 +4,7 @@ import com.bobandata.iot.transport.util.ConvertUtil;
 import com.bobandata.iot.transport.util.HexUtils;
 import com.bobandata.iot.zj102.frame.util.IUtilFrame;
 
-public abstract class Info
-        implements IUtilFrame {
+public abstract class Info implements IUtilFrame {
     private int infoAddress;
     private int dataNum;
     private int checksum;

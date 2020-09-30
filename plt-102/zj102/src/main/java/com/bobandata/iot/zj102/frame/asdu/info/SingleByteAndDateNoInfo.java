@@ -67,20 +67,10 @@ public class SingleByteAndDateNoInfo extends Info {
 
     @Override
     public String toExplain() {
-        String value = Integer.toBinaryString(this.determiner);
-        switch (value.length()){
-            case 0:value="00000000";break;
-            case 1:value="0000000"+value;break;
-            case 2:value="000000"+value;break;
-            case 3:value="00000"+value;break;
-            case 4:value="0000"+value;break;
-            case 5:value="000"+value;break;
-            case 6:value="00"+value;break;
-            case 7:value="0"+value;break;
-        }
-        return "\n"+"{信息体地址SPA:"+getInfoAddress()+","
-                +"SPI:"+value.substring(7,8)+","
-                +"SPQ:"+Integer.parseInt(value.substring(0,7),2)+","
+        int a = this.determiner&0b1;
+        return "\n"+"{SPA:"+getInfoAddress()+","
+                +"SPI:"+(this.determiner&0b1)+","
+                +"SPQ:"+(this.determiner>>1)+","
                 +"时间:"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(this.date)
                 +"}";
     }

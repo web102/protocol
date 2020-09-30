@@ -1,5 +1,7 @@
 package com.bobandata.iot.util;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -8,64 +10,39 @@ import java.util.List;
  * @Company: 上海博般数据技术有限公司
  * @Date: Created in 15:50 2018/8/6.
  */
+@Data
 public class SimpleTree {
-    private String title;
-    private boolean selected=false;
     private Integer id;
+    private String title;
     private Integer modelId;
+    private Integer rootId;
     private List<SimpleTree> children;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
-    }
-
-    public List<SimpleTree> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<SimpleTree> children) {
-        this.children = children;
-    }
 
     public SimpleTree(){
     }
-    public SimpleTree(Integer id, String title,boolean selected){
+    public SimpleTree(Integer id, String title){
         this.title = title;
-        this.selected=selected;
         this.id=id;
     }
-    public SimpleTree(Integer id, String title, Integer modelId,boolean selected){
+    public SimpleTree(Integer id, String title, Integer modelId){
         this.title = title;
-        this.selected=selected;
         this.id=id;
         this.modelId=modelId;
+    }
+
+    public SimpleTree(Integer id,String title, Integer modelId, Integer rootId) {
+        this.title = title;
+        this.id = id;
+        this.modelId = modelId;
+        this.rootId = rootId;
+    }
+
+    public SimpleTree(Integer id,String title,  Integer modelId, Integer rootId, List<SimpleTree> children) {
+        this.title = title;
+        this.id = id;
+        this.modelId = modelId;
+        this.rootId = rootId;
+        this.children = children;
     }
 }

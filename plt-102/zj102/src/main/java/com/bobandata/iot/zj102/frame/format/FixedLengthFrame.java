@@ -54,7 +54,7 @@ public class FixedLengthFrame implements IFrame {
         return ConvertUtil.bytes2hex(hexBytes);
     }
     public String toExplain() {
-        String start = "开始字符：10";
+        String start = "开始字符:10";
         String controlDomain = this.controlDomain.toExplain();
         String linkAddress = this.linkAddress.toExplain();
         String checkSum = this.fixedLengthCheckSum.toExplain();
