@@ -30,13 +30,14 @@ public class EventHandle extends DataHandle {
         List<HisEvent> data = null;
         //如果有缓存说明上次已经读完,这次直接返回结束针
 
-        switch (asduHead.getTi()){
-            case Ti.singleInfo:
+        int ti = asduHead.getTi();
+        switch (Ti.findByRequest(ti)){
+            case SINGLEINFO:
                 Date startDate = (Date) params.getParameter("startDate");
                 Date endDate = (Date) params.getParameter("endDate");
                 data = getDataList(startDate, endDate,0,0);
                 break;
-            case Ti.timeLimitSingleInfo:
+            case TIMELIMITSINGLEINFO:
                 data = getDataList(null,null,0,0);
                 break;
         }

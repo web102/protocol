@@ -5,14 +5,15 @@ import com.bobandata.iot.transport.protocol.IMasterProtocol;
 import com.bobandata.iot.transport.util.TaskParam;
 import com.bobandata.iot.zj102.frame.asdu.Asdu;
 import com.bobandata.iot.zj102.frame.asdu.AsduHead;
-import com.bobandata.iot.zj102.frame.controldomain.ControlDomain_M;
 import com.bobandata.iot.zj102.frame.controldomain.ControlDomain_C;
+import com.bobandata.iot.zj102.frame.controldomain.ControlDomain_M;
 import com.bobandata.iot.zj102.frame.format.FixedLengthFrame;
 import com.bobandata.iot.zj102.frame.format.VariableLengthFrame;
 import com.bobandata.iot.zj102.frame.util.LinkAddress;
 import com.bobandata.iot.zj102.util.Ti;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -73,21 +74,18 @@ public class Iec102SendRequest {
         VariableLengthFrame returnFrame =null;
         Asdu asdu =null;
 
-        for (int i = 0; i <= 3; i++) {
+//        for (int i = 0; i <= 3; i++) {
             returnFrame = (VariableLengthFrame) sendMsg(requestFrame);
-            if(returnFrame==null){
-                Thread.sleep(3000);
-            }else{
-                asdu = returnFrame.getAsdu();
-                break;
-            }
-        }
+//            if(returnFrame==null){
+//                Thread.sleep(3000);
+//            }else{
+//                asdu = returnFrame.getAsdu();
+//                break;
+//            }
+//        }
 
         try {
-        AsduHead asduHead = returnFrame.getAsdu().getAsduHead();
-
-                controlDomainStr=controlDomainStr.equals("5A")?"7A":"5A";
-
+            controlDomainStr = controlDomainStr.equals("5A") ? "7A" : "5A";
             return (ControlDomain_C) returnFrame.getControlDomain();
         } catch (Exception e){
             logger.error("Read SalveProtocol massage fail");
@@ -99,37 +97,57 @@ public class Iec102SendRequest {
 
     public void sendTask() throws Exception {
         int taskType = this.taskParam.getTaskType()&0xff;
-        switch (taskType) {
-            case Ti.factory:
-            case Ti.singleInfo:
-            case Ti.getTerminalTime:
-            case Ti.getDeviation:
+        switch (Ti.findByRequest(taskType)) {
+            case FACTORY:
+            case SINGLEINFO:
+            case GETTERMINALTIME:
+            case GET_DEVIATION:
                 new NullRequest(this.taskParam,this.protocol).sendDataTask();
                 break;
-            case Ti.timeLimitSingleInfo:
+            case TIMELIMITSINGLEINFO:
                 new TimeLimitSingleInfoRequest(this.taskParam,this.protocol).sendDataTask();
                 break;
-            case Ti.timeAsyn:
+            case TIMEASYN:
                 new TimeAsynRequest( this.taskParam,this.protocol).sendDataTask();
                 break;
-            case Ti.setDeviation:
+            case SET_DEVIATION:
                 new SetDeviationRequest( this.taskParam,this.protocol).sendDataTask();
                 break;
 
-            case Ti.rpView:
-            case Ti.tariff:
-            case Ti.monthView:
-            case Ti.dayRpView:
-            case Ti.monthRpView:
-            case Ti.dayTariff:
-            case Ti.monthTariff:
-            case Ti.dayDemand:
-            case Ti.monthDemand:
-            case Ti.billView:
-            case Ti.cycleBillView:
-            case Ti.dayView:
-            case Ti.cycleView:
-            case Ti.view:
+            case RPVIEW:
+            case DAY_RPVIEW:
+            case MONTH_RPVIEW:
+            case TARIFF:
+            case DAY_TARIFF:
+            case MONTH_TARIFF:
+            case VIEW:
+            case DAY_VIEW:
+            case MONTH_VIEW:
+            case DAY_DEMAND:
+            case MONTH_DEMAND:
+
+            case FIRST_VIEW     :
+            case FIRST_ADDR_VIEW:
+            case LIMIT_VIEW     :
+            case LIMIT_ADDR_VIEW:
+
+            case CYCLEVIEW:
+            case FIRST_CYCLEVIEW     :
+            case FIRST_ADDR_CYCLEVIEW:
+            case LIMIT_CYCLEVIEW     :
+            case LIMIT_ADDR_CYCLEVIEW:
+            case BILLVIEW:
+            case FIRST_BILLVIEW     :
+            case FIRST_ADDR_BILLVIEW:
+            case LIMIT_BILLVIEW     :
+            case LIMIT_ADDR_BILLVIEW:
+
+            case CYCLEBILLVIEW:
+            case FIRST_CYCLEBILLVIEW:
+            case FIRST_ADDR_CYCLEBILLVIEW:
+            case LIMIT_CYCLEBILLVIEW     :
+            case LIMIT_ADDR_CYCLEBILLVIEW:
+
                 new DataRequest(this.taskParam,this.protocol).sendDataTask();
                 break;
                 default:
@@ -138,7 +156,7 @@ public class Iec102SendRequest {
         }
     }
 
-    public IFrame sendMsg(IFrame message){
+    public IFrame sendMsg(IFrame message) throws Exception {
         return this.protocol.sendMsg(message);
     }
 

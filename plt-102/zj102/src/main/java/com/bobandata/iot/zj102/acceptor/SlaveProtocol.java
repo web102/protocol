@@ -86,55 +86,71 @@ public class SlaveProtocol implements ISlaveProtocol {
         AsduHead asduHead = (AsduHead)params.getParameter("asduHead");
         int typeIdentifier = asduHead.getTi();
         //获取到消息类型
-        switch (typeIdentifier) {
+        switch (Ti.findByRequest(typeIdentifier)) {
             //电量数据
-            case Ti.view:
-            case Ti.billView:
-            case Ti.dayView:
-            case Ti.cycleView:
-            case Ti.monthView:
-            case Ti.cycleBillView:
+            case VIEW:
+            case DAY_VIEW:
+            case MONTH_VIEW:
+            case FIRST_VIEW     :
+            case FIRST_ADDR_VIEW:
+            case LIMIT_VIEW     :
+            case LIMIT_ADDR_VIEW:
+            case CYCLEVIEW:
+            case FIRST_CYCLEVIEW     :
+            case FIRST_ADDR_CYCLEVIEW:
+            case LIMIT_CYCLEVIEW     :
+            case LIMIT_ADDR_CYCLEVIEW:
+            case BILLVIEW:
+            case FIRST_BILLVIEW     :
+            case FIRST_ADDR_BILLVIEW:
+            case LIMIT_BILLVIEW     :
+            case LIMIT_ADDR_BILLVIEW:
+            case CYCLEBILLVIEW:
+            case FIRST_CYCLEBILLVIEW:
+            case FIRST_ADDR_CYCLEBILLVIEW:
+            case LIMIT_CYCLEBILLVIEW     :
+            case LIMIT_ADDR_CYCLEBILLVIEW:
                 this.executeHandle(new ViewHandle(channel, params));
                 break;
             //费率数据
-            case Ti.tariff:
-            case Ti.dayTariff:
-            case Ti.monthTariff:
+            case TARIFF:
+            case DAY_TARIFF:
+            case MONTH_TARIFF:
                 this.executeHandle(new TariffHandle(channel, params));
                 break;
             //需量数据
-            case Ti.dayDemand:
-            case Ti.monthDemand:
+            case DAY_DEMAND:
+            case MONTH_DEMAND:
                 this.executeHandle(new DemandHandle(channel, params));
                 break;
             //获取终端时间
-            case Ti.getTerminalTime:
+            case GETTERMINALTIME:
                 this.executeHandle(new GetTimeHandle(channel, params));
                 break;
             //同步
-            case Ti.timeAsyn:
+            case TIMEASYN:
                 this.executeHandle(new SynchClockHandle(channel, params));
                 break;
             //读制造厂和产品规范
-            case Ti.factory:
+            case FACTORY:
                 this.executeHandle(new FactoryHandle(channel, params));
                 break;
             //读取时钟差值
-            case Ti.getDeviation:
+            case GET_DEVIATION:
                 this.executeHandle(new GetDeviationHandle(channel, params));
                 break;
             //设置时钟差值
-            case Ti.setDeviation:
+            case SET_DEVIATION:
                 this.executeHandle(new SetDeviationHandle(channel, params));
                 break;
             //四象限無功
-            case Ti.rpView:
-            case Ti.dayRpView:
-            case Ti.monthRpView:
+            case RPVIEW:
+            case DAY_RPVIEW:
+            case MONTH_RPVIEW:
                 this.executeHandle(new RpViewHandle(channel, params));
                 break;
-            case Ti.singleInfo:
-            case Ti.timeLimitSingleInfo:
+            case SINGLEINFO:
+            case TIMELIMITSINGLEINFO:
                 this.executeHandle(new EventHandle(channel, params));
                 break;
                 default:

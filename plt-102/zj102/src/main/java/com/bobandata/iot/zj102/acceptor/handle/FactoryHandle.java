@@ -28,7 +28,7 @@ public class FactoryHandle extends Iec102Handle{
         
         AsduHead asHead = new AsduHead();
         asHead.setRad(asduHead.getRad());
-        asHead.setTi(Ti.returnFactory);
+        asHead.setTi(Ti.FACTORY.getResponse());
         asHead.setPad(asduHead.getPad());
         asHead.setCot((byte)0x05);
         asHead.setVsq((byte)0x01);

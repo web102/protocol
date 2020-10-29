@@ -103,7 +103,7 @@ public class Iec102SendRequest {
         }
     }
 
-    public IFrame sendMsg(IFrame message){
+    public IFrame sendMsg(IFrame message) throws Exception {
         return this.protocol.sendMsg(message);
     }
 

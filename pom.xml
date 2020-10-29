@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>plt-102</module>
-        <module>dlt-645</module>
         <module>entity</module>
     </modules>
 

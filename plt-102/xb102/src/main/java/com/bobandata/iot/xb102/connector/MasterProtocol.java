@@ -83,7 +83,7 @@ public class MasterProtocol extends IMasterProtocol {
     public void isClose() {
         if (this.session != null) {
             try {
-                this.session.getBasicRemote().sendText((new WebMessage(WebMessage.Code.CLOSE.getCode(), "关闭")).toJson());
+                this.session.getBasicRemote().sendText((new WebMessage(WebMessage.Code.CLOSE, "关闭")).toJson());
             } catch (IOException e) {
                 e.printStackTrace();
             }

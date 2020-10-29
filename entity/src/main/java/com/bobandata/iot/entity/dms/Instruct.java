@@ -12,10 +12,11 @@ import javax.persistence.*;
 @Entity
 public class Instruct {
 
-//INSTRUCT_ID	指令ID		int		10
-//INSTRUCT_NAME	指令名称	varchar	20
-//INSTRUCT_TYPE	指令类型	varchar	20
-//INSTRUCT_PATH	指令路径	int		10
+//INSTRUCT_ID	 指令ID		int		10
+//INSTRUCT_NAME	 指令名称	varchar	20
+//INSTRUCT_TYPE	 指令类型	varchar	20
+//INSTRUCT_PATH  指令路径	int		10
+//INSTRUCT_FRAME 指令结构	int 	10
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +28,8 @@ public class Instruct {
     private String instructType;
     @Column(name="INSTRUCT_PATH")
     private Integer instructPath;
+    @Column(name="INSTRUCT_FRAME")
+    private Integer instructFrame;
 
     public Integer getInstructId() {
         return instructId;
@@ -60,4 +63,11 @@ public class Instruct {
         this.instructPath = instructPath;
     }
 
+    public Integer getInstructFrame() {
+        return instructFrame;
+    }
+
+    public void setInstructFrame(Integer instructFrame) {
+        this.instructFrame = instructFrame;
+    }
 }

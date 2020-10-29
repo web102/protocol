@@ -56,8 +56,8 @@ public class ListAsdu extends Asdu {
         asduHead.decode(buffer);
         setAsduHead(asduHead);
         this.infoFrames = new ArrayList();
-        switch (asduHead.getTi()) {
-            case Ti.returnSingleInfo:
+        switch (Ti.findByResponse(asduHead.getTi())) {
+            case SINGLEINFO:
                 for (int i = 0; i < asduHead.getVsq(); i++) {
                     SingleByteAndDateNoInfo energyInfo = new SingleByteAndDateNoInfo();
                     energyInfo.decode(buffer);

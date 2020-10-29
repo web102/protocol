@@ -25,7 +25,7 @@ public class InitEndHandle extends Iec102Handle{
   	    //创建链路地址
   	    LinkAddress linkAddress = new LinkAddress("0100");
   	    //asdu的信息头
-  	    AsduHead asduHead = new AsduHead(Ti.returnInitEnd, (byte)0x01, (byte)0x04, 1, (byte)0x0b);
+  	    AsduHead asduHead = new AsduHead(Ti.INIT_END.getResponse(), (byte)0x01, (byte)0x04, 1, (byte)0x0b);
 
         InitAsdu initAsdu = new InitAsdu(asduHead, (byte)0x01);
         VariableLengthFrame response = new VariableLengthFrame(controlDomain, linkAddress, initAsdu);

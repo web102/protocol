@@ -40,53 +40,53 @@ public abstract class DataHandle extends Iec102Handle{
         List<? extends IData> allDate = new ArrayList<>();    //总数据条数
         List<Object> sendDate = new ArrayList<>();
 
-        if(channel.attr(hisAcqs).get() == null) {
-            switch (asduHead.getTi()) {
-                case Ti.monthView:
-                case Ti.billView:
-                case Ti.cycleBillView:
-                case Ti.dayView:
-                case Ti.cycleView:
-                case Ti.view:
-                    allDate = HttpDataManager.getData(HisView.class, startDate, endDate, startMark, endMark);
-                    break;
-                case Ti.rpView:
-                case Ti.dayRpView:
-                case Ti.monthRpView:
-                    allDate = HttpDataManager.getData(HisRpView.class, startDate, endDate, startMark, endMark);
-                    break;
-                case Ti.tariff:
-                case Ti.dayTariff:
-                case Ti.monthTariff:
-                    allDate = HttpDataManager.getData(HisTariff.class, startDate, endDate, startMark, endMark);
-                    break;
-                case Ti.dayDemand:
-                case Ti.monthDemand:
-                    allDate = HttpDataManager.getData(HisDemand.class, startDate, endDate, startMark, endMark);
-                    break;
-                case Ti.singleInfo:
-                    allDate = HttpDataManager.getData(HisEvent.class);
-                    break;
-                case Ti.timeLimitSingleInfo:
-                    allDate = HttpDataManager.getData(HisEvent.class,startDate,endDate);
-                    break;
-                default:
-                    logger.error("---------------Not Found Type----------------");
-                    break;
-            }
-            //如果数据为空，则返回无数据帧
-            if(allDate.size()==0){
-                specialHandle((byte)0x0D);
-                return null;
-            }
-        }else {
-            allDate = channel.attr(hisAcqs).get();
-            //如果数据为空，则返回完毕帧
-            if(allDate.size()==0){
-                specialHandle((byte)0x0A);
-                return null;
-            }
-        }
+//        if(channel.attr(hisAcqs).get() == null) {
+//            switch (Ti.findByRequest(asduHead.getTi())) {
+//                case MONTH_VIEW:
+//                case BILLVIEW:
+//                case CYCLEBILLVIEW:
+//                case DAY_VIEW:
+//                case CYCLEVIEW:
+//                case VIEW:
+//                    allDate = HttpDataManager.getData(HisView.class, startDate, endDate, startMark, endMark);
+//                    break;
+//                case Ti.rpView:
+//                case Ti.dayRpView:
+//                case Ti.monthRpView:
+//                    allDate = HttpDataManager.getData(HisRpView.class, startDate, endDate, startMark, endMark);
+//                    break;
+//                case Ti.tariff:
+//                case Ti.dayTariff:
+//                case Ti.monthTariff:
+//                    allDate = HttpDataManager.getData(HisTariff.class, startDate, endDate, startMark, endMark);
+//                    break;
+//                case Ti.dayDemand:
+//                case Ti.monthDemand:
+//                    allDate = HttpDataManager.getData(HisDemand.class, startDate, endDate, startMark, endMark);
+//                    break;
+//                case Ti.singleInfo:
+//                    allDate = HttpDataManager.getData(HisEvent.class);
+//                    break;
+//                case Ti.timeLimitSingleInfo:
+//                    allDate = HttpDataManager.getData(HisEvent.class,startDate,endDate);
+//                    break;
+//                default:
+//                    logger.error("---------------Not Found Type----------------");
+//                    break;
+//            }
+//            //如果数据为空，则返回无数据帧
+//            if(allDate.size()==0){
+//                specialHandle((byte)0x0D);
+//                return null;
+//            }
+//        }else {
+//            allDate = channel.attr(hisAcqs).get();
+//            //如果数据为空，则返回完毕帧
+//            if(allDate.size()==0){
+//                specialHandle((byte)0x0A);
+//                return null;
+//            }
+//        }
 
         dateTime = allDate.get(0).getOccurTime();
         //如果时间差在一分钟内的在同一条帧里面
@@ -109,7 +109,7 @@ public abstract class DataHandle extends Iec102Handle{
         ControlDomain_C controlDomain_C = new ControlDomain_C((byte) 0, (byte) 0, (byte) 1, (byte) 0, (byte) 8);
         LinkAddress linkAddress = (LinkAddress) params.getParameter("linkAddress");
         AsduHead asHead = new AsduHead();
-        asHead.setTi(Ti.compareType(asduHead.getTi()));
+        asHead.setTi(Ti.findByRequest(asduHead.getTi()).getResponse());
         asHead.setVsq((byte)vsq);
         asHead.setCot((byte)5);
         asHead.setPad(asduHead.getPad());

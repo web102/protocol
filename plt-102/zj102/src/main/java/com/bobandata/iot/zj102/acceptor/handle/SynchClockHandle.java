@@ -28,7 +28,7 @@ public class SynchClockHandle extends Iec102Handle{
         
         AsduHead asHead = new AsduHead();
         asHead.setRad(asduHead.getRad());
-        asHead.setTi(Ti.returnTimeAsyn);
+        asHead.setTi(Ti.TIMEASYN.getResponse());
         asHead.setPad(asduHead.getPad());
         asHead.setCot((byte)0x30);
         asHead.setVsq((byte)0x01);

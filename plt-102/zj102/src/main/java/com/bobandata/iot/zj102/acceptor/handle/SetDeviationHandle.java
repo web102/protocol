@@ -28,7 +28,7 @@ public class SetDeviationHandle extends Iec102Handle{
         
         AsduHead asHead = new AsduHead();
         asHead.setRad(asduHead.getRad());
-        asHead.setTi(Ti.returnSetDeviation);
+        asHead.setTi(Ti.SET_DEVIATION.getResponse());
         asHead.setPad(asduHead.getPad());
         asHead.setCot((byte)0x31);
         asHead.setVsq((byte)0x01);

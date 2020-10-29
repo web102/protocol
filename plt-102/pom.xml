@@ -12,8 +12,8 @@
     <artifactId>plt-102</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>zj102</module>
         <module>xb102</module>
+        <module>zj102</module>
     </modules>
 
     <dependencies>

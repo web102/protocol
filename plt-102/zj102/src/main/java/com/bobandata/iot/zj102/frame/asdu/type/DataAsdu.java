@@ -60,25 +60,48 @@ public class DataAsdu extends Asdu {
         asduHead.decode(buffer);
         setAsduHead(asduHead);
         this.infoFrames = new ArrayList();
-        switch (asduHead.getTi()) {
-            case Ti.returnBillView:
-            case Ti.returnCycleBillView:
-            case Ti.returnView:
-            case Ti.returnCycleView:
-            case Ti.returnDayView:
-            case Ti.returnMonthView:
-            case Ti.returnRpView:
-            case Ti.returnDayRpView:
-            case Ti.returnMonthRpView:
+
+        int responseTi = asduHead.getTi();
+        switch (Ti.findByResponse(responseTi)) {
+            case VIEW:
+            case DAY_VIEW:
+            case MONTH_VIEW:
+
+            case FIRST_VIEW     :
+            case FIRST_ADDR_VIEW:
+            case LIMIT_VIEW     :
+            case LIMIT_ADDR_VIEW:
+
+            case CYCLEVIEW:
+            case FIRST_CYCLEVIEW     :
+            case FIRST_ADDR_CYCLEVIEW:
+            case LIMIT_CYCLEVIEW     :
+            case LIMIT_ADDR_CYCLEVIEW:
+
+            case BILLVIEW:
+            case FIRST_BILLVIEW     :
+            case FIRST_ADDR_BILLVIEW:
+            case LIMIT_BILLVIEW     :
+            case LIMIT_ADDR_BILLVIEW:
+
+            case CYCLEBILLVIEW:
+            case FIRST_CYCLEBILLVIEW:
+            case FIRST_ADDR_CYCLEBILLVIEW:
+            case LIMIT_CYCLEBILLVIEW     :
+            case LIMIT_ADDR_CYCLEBILLVIEW:
+
+            case RPVIEW:
+            case DAY_RPVIEW:
+            case MONTH_RPVIEW:
                 for (int i = 0; i < asduHead.getVsq(); i++) {
                     SingleGroupInfo energyInfo = new SingleGroupInfo();
                     energyInfo.decode(buffer);
                     this.infoFrames.add(energyInfo);
                 }
                 break;
-            case Ti.returnTariff:
-            case Ti.returnDayTariff:
-            case Ti.returnMonthTariff:
+            case TARIFF:
+            case DAY_TARIFF:
+            case MONTH_TARIFF:
                 for (int i = 0; i < asduHead.getVsq(); i++) {
                     FiveGroupInfo FiveGroupInfo = new FiveGroupInfo();
                     FiveGroupInfo.decode(buffer);
@@ -86,8 +109,8 @@ public class DataAsdu extends Asdu {
                 }
                 break;
 
-            case Ti.returnDayDemand:
-            case Ti.returnMonthDemand:
+            case DAY_DEMAND:
+            case MONTH_DEMAND:
                 for (int i = 0; i < asduHead.getVsq(); i++) {
                     SingleGroupAndDateInfo singleGroupAndDateInfo = new SingleGroupAndDateInfo();
                     singleGroupAndDateInfo.decode(buffer);
