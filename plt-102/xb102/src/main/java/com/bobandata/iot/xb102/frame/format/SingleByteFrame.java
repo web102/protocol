@@ -3,7 +3,6 @@ package com.bobandata.iot.xb102.frame.format;
 import com.bobandata.iot.transport.frame.IFrame;
 import com.bobandata.iot.transport.util.ConvertUtil;
 import com.bobandata.iot.transport.util.HexUtils;
-import com.bobandata.iot.xb102.connector.MasterProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @Date:15:19 2018/8/17
  */
 public class SingleByteFrame implements IFrame {
-    private static final Logger logger = LoggerFactory.getLogger(MasterProtocol.class);
+    private static final Logger logger = LoggerFactory.getLogger(SingleByteFrame.class);
     private ByteBuf buffer;
     private String hexDump;
     private byte singleByte;

@@ -39,13 +39,13 @@ public class VariableLengthFrame implements IFrame {
         try {
             this.decode();
         } catch (Exception e) {
-            logger.error("E006-可变帧长解码异常！1");
+            logger.error("E006-可变帧长解码异常！",e);
             e.printStackTrace();
         }
     }
 
     public VariableLengthFrame(ControlDomain controlDomain, LinkAddress linkAddress, Asdu asdu) {
-        this.buffer = Unpooled.buffer(200, 512);
+        this.buffer = Unpooled.buffer(200, 256);
         this.variableLengthHead = new VariableLengthHead(asdu.getAsduLength());
         this.controlDomain = controlDomain;
         this.linkAddress = linkAddress;
@@ -54,7 +54,7 @@ public class VariableLengthFrame implements IFrame {
         try {
             this.encode();
         } catch (Exception e) {
-            logger.error("E005-可变帧长编码异常！");
+            logger.error("E005-可变帧长编码异常！",e);
         }
     }
     public int decode()

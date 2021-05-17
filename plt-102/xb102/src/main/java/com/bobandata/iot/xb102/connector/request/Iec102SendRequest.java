@@ -1,8 +1,8 @@
 package com.bobandata.iot.xb102.connector.request;
 
 import com.bobandata.iot.transport.frame.IFrame;
-import com.bobandata.iot.transport.protocol.IMasterProtocol;
-import com.bobandata.iot.transport.util.TaskParam;
+
+import com.bobandata.iot.xb102.connector.Xb102MasterProtocol;
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_C;
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_M;
 import com.bobandata.iot.xb102.frame.format.FixedLengthFrame;
@@ -10,6 +10,8 @@ import com.bobandata.iot.xb102.frame.format.SingleByteFrame;
 import com.bobandata.iot.xb102.frame.format.VariableLengthFrame;
 import com.bobandata.iot.xb102.frame.util.LinkAddress;
 import com.bobandata.iot.xb102.util.Ti;
+import net.njcp.ias.data.TaskParam;
+import net.njcp.ias.protocol.IAsynProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
@@ -18,12 +20,12 @@ import java.util.Date;
 public class Iec102SendRequest {
     private static final Logger logger = LoggerFactory.getLogger(Iec102SendRequest.class);
     protected TaskParam taskParam;
-    protected IMasterProtocol protocol;
+    protected IAsynProtocol protocol;
     private String controlDomainStr = "5A";
     private boolean isEnd = false;
     private boolean stop = false;
 
-    public Iec102SendRequest(TaskParam taskParam, IMasterProtocol protocol) {
+    public Iec102SendRequest(TaskParam taskParam, IAsynProtocol protocol) {
         this.taskParam = taskParam;
         this.protocol = protocol;
     }
@@ -71,7 +73,7 @@ public class Iec102SendRequest {
                 return (ControlDomain_M) ((VariableLengthFrame) returnFrame).getControlDomain();
             } catch (Exception e) {
                 logger.error("Read SalveProtocol massage fail");
-                this.taskParam.getChannel().disconnect();
+                this.taskParam.getWebSession().close();
                 isEnd = true;
                 return null;
             }
@@ -80,7 +82,7 @@ public class Iec102SendRequest {
     }
 
     public void sendTask() throws Exception {
-        int taskType = this.taskParam.getTaskType()&0xff;
+        int taskType = this.taskParam.getTaskItem().getTaskType()&0xff;
         switch (taskType) {
             case Ti.singleInfo:
             case Ti.getTerminalTime:
@@ -104,7 +106,7 @@ public class Iec102SendRequest {
     }
 
     public IFrame sendMsg(IFrame message) throws Exception {
-        return this.protocol.sendMsg(message);
+        return ((Xb102MasterProtocol)this.protocol).sendMsg(message);
     }
 
     public static String getStringDate() {

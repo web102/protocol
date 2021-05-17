@@ -1,12 +1,13 @@
 package com.bobandata.iot.xb102.connector.request;
 
-import com.bobandata.iot.transport.protocol.IMasterProtocol;
-import com.bobandata.iot.transport.util.TaskParam;
+
+import net.njcp.ias.data.TaskParam;
 import com.bobandata.iot.xb102.frame.asdu.AsduHead;
 import com.bobandata.iot.xb102.frame.asdu.type.TimeLimitReqAsdu;
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_C;
 import com.bobandata.iot.xb102.frame.format.VariableLengthFrame;
 import com.bobandata.iot.xb102.frame.util.LinkAddress;
+import net.njcp.ias.protocol.IAsynProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ import java.util.Date;
 public class TimeLimitSingleInfoRequest extends Iec102SendRequest {
     private static final Logger logger = LoggerFactory.getLogger(TimeLimitSingleInfoRequest.class);
 
-    public TimeLimitSingleInfoRequest(TaskParam taskParam, IMasterProtocol protocol) {
+    public TimeLimitSingleInfoRequest(TaskParam taskParam, IAsynProtocol protocol) {
         super(taskParam,protocol);
     }
 
@@ -38,10 +39,10 @@ public class TimeLimitSingleInfoRequest extends Iec102SendRequest {
         //4应用服务单元公共地址
         //5记录地址 <51>＝ 单点信息的全部记录
         //  开始时间
-        Date endDate = taskParam.getEndDate();
+        Date endDate = taskParam.getEndTime();
         //  结束时间
-        Date startDate = taskParam.getStartDate();
-        AsduHead asduHead = new AsduHead((byte) taskParam.getTaskType(), (byte) 01, (byte) 5, "0100", (byte) 1);
+        Date startDate = taskParam.getStartTime();
+        AsduHead asduHead = new AsduHead(taskParam.getTaskItem().getTaskType(), (byte) 01, (byte) 5, "0100", (byte) 1);
         TimeLimitReqAsdu terminalTimeAsdu = new TimeLimitReqAsdu(asduHead,startDate ,endDate);
         VariableLengthFrame requestFrame = new VariableLengthFrame(controlDomain, linkAddress, terminalTimeAsdu);
         //响应为单字节

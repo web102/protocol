@@ -23,6 +23,7 @@ public class VariableLengthHead implements IUtilFrame {
         buffer.writeByte(HexUtils.intToByte(getDataLength()));
         buffer.writeByte(HexUtils.intToByte(getDataLength()));
         buffer.writeByte(104);
+        buffer.capacity(HexUtils.intToByte(getDataLength()));
         this.hexDump = ByteBufUtil.hexDump(buffer);
         return 0;
     }

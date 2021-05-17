@@ -1,17 +1,18 @@
 package com.bobandata.iot.xb102.connector.request;
 
-import com.bobandata.iot.transport.protocol.IMasterProtocol;
-import com.bobandata.iot.transport.util.TaskParam;
+
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_C;
 import com.bobandata.iot.xb102.frame.format.FixedLengthFrame;
 import com.bobandata.iot.xb102.frame.util.LinkAddress;
+import net.njcp.ias.data.TaskParam;
+import net.njcp.ias.protocol.IAsynProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LinkRequest extends Iec102SendRequest {
     private static final Logger logger = LoggerFactory.getLogger(LinkRequest.class);
 
-     LinkRequest(TaskParam taskParam, IMasterProtocol protocol) {
+     LinkRequest(TaskParam taskParam, IAsynProtocol protocol) {
          super(taskParam, protocol);
      }
 

@@ -1,17 +1,18 @@
 package com.bobandata.iot.xb102.connector.request;
 
-import com.bobandata.iot.transport.protocol.IMasterProtocol;
-import com.bobandata.iot.transport.util.TaskParam;
+
+import net.njcp.ias.data.TaskParam;
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_C;
 import com.bobandata.iot.xb102.frame.format.FixedLengthFrame;
 import com.bobandata.iot.xb102.frame.util.LinkAddress;
+import net.njcp.ias.protocol.IAsynProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ResetRequest extends Iec102SendRequest {
     private static final Logger logger = LoggerFactory.getLogger(ResetRequest.class);
 
-     ResetRequest(TaskParam taskParam, IMasterProtocol protocol) {
+     ResetRequest(TaskParam taskParam, IAsynProtocol protocol) {
          super(taskParam, protocol);
      }
 

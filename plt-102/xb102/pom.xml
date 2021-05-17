@@ -11,4 +11,12 @@
 
     <artifactId>xb102</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>net.njcp</groupId>
+            <artifactId>ias-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

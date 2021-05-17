@@ -1,12 +1,13 @@
 package com.bobandata.iot.xb102.connector.request;
 
-import com.bobandata.iot.transport.protocol.IMasterProtocol;
-import com.bobandata.iot.transport.util.TaskParam;
+
+import net.njcp.ias.data.TaskParam;
 import com.bobandata.iot.xb102.frame.asdu.AsduHead;
 import com.bobandata.iot.xb102.frame.asdu.type.LongTimeAsdu;
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_C;
 import com.bobandata.iot.xb102.frame.format.VariableLengthFrame;
 import com.bobandata.iot.xb102.frame.util.LinkAddress;
+import net.njcp.ias.protocol.IAsynProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ import java.util.Date;
 public class TimeAsynRequest extends Iec102SendRequest{
     private static final Logger logger = LoggerFactory.getLogger(TimeAsynRequest.class);
 
-    public TimeAsynRequest(TaskParam taskParam, IMasterProtocol protocol) {
+    public TimeAsynRequest(TaskParam taskParam, IAsynProtocol protocol) {
         super(taskParam, protocol);
     }
 
@@ -37,7 +38,7 @@ public class TimeAsynRequest extends Iec102SendRequest{
         //3传输原因 请求或被请求
         //4应用服务单元公共地址
         //5记录地址 <51>＝ 单点信息的全部记录
-        AsduHead asduHead = new AsduHead((byte) taskParam.getTaskType(), (byte)1, (byte) 48, "0100", (byte) 0);
+        AsduHead asduHead = new AsduHead(taskParam.getTaskItem().getTaskType(), (byte)1, (byte) 48, "0100", (byte) 0);
         LongTimeAsdu time7ByteAsdu = new LongTimeAsdu(asduHead,new Date());
         VariableLengthFrame requestFrame = new VariableLengthFrame(controlDomain, linkAddress, time7ByteAsdu);
         //响应为单字节

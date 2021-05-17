@@ -1,12 +1,13 @@
 package com.bobandata.iot.xb102.connector.request;
 
-import com.bobandata.iot.transport.protocol.IMasterProtocol;
-import com.bobandata.iot.transport.util.TaskParam;
+
+import net.njcp.ias.data.TaskParam;
 import com.bobandata.iot.xb102.frame.asdu.AsduHead;
 import com.bobandata.iot.xb102.frame.asdu.type.NullAsdu;
 import com.bobandata.iot.xb102.frame.controldomain.ControlDomain_C;
 import com.bobandata.iot.xb102.frame.format.VariableLengthFrame;
 import com.bobandata.iot.xb102.frame.util.LinkAddress;
+import net.njcp.ias.protocol.IAsynProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class SendStopRequest extends Iec102SendRequest{
     private static final Logger logger = LoggerFactory.getLogger(SendStopRequest.class);
 
-    public SendStopRequest(TaskParam taskParam, IMasterProtocol protocol) {
+    public SendStopRequest(TaskParam taskParam, IAsynProtocol protocol) {
         super(taskParam, protocol);
     }
 
@@ -35,7 +36,7 @@ public class SendStopRequest extends Iec102SendRequest{
         //3传输原因 请求或被请求
         //4应用服务单元公共地址
         //5记录地址
-        AsduHead asduHead = new AsduHead((byte)taskParam.getTaskType(),(byte)0, (byte)8, "0100", (byte)0);
+        AsduHead asduHead = new AsduHead(taskParam.getTaskItem().getTaskType(),(byte)0, (byte)8, "0100", (byte)0);
         NullAsdu nullAsdu = new NullAsdu(asduHead);
         VariableLengthFrame requestFrame = new VariableLengthFrame(controlDomain, linkAddress, nullAsdu);
         //响应为单字节
